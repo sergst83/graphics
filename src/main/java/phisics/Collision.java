@@ -27,7 +27,7 @@ public class Collision {
 
         if (ballPaddle(player.getTopL(), new Point(bX, bY + bR))) {
             ball.setDy(ball.getDy() * -1);
-            ball.setDx(-2);
+            ball.setDx(-1);
         }
 
         if (ballPaddle(player.getTopC(), new Point(bX, bY + bR))) {
@@ -37,7 +37,7 @@ public class Collision {
 
         if (ballPaddle(player.getTopR(), new Point(bX, bY + bR))) {
             ball.setDy(ball.getDy() * -1);
-            ball.setDx(2);
+            ball.setDx(1);
         }
 
         if (ballPaddle(player.getSideL(), new Point(bX + bR, bY))) {

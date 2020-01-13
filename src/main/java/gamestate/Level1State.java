@@ -28,7 +28,13 @@ public class Level1State extends GameState {
         ball = new Ball(GamePanel.WIDTH / 2 - 5, GamePanel.HEIGHT / 2 - 5, 5);
         bricks = new ArrayList<>();
 
-        int[][] ids = new int[8][14];
+        int bricksVerticalCount = 8;
+        int bricksHorizontalCount = 14;
+        int brickWeight = GamePanel.WIDTH / bricksHorizontalCount;
+        int brickHeight = 10;
+        int bricksInterval = 5;
+
+        int[][] ids = new int[bricksVerticalCount][bricksHorizontalCount];
         for (int i = 0; i < ids.length; i++) {
             for (int j = 0; j < ids[i].length; j++) {
                 if (i <= 1) {
@@ -51,7 +57,7 @@ public class Level1State extends GameState {
 
         for (int i = 0; i < ids.length; i++) {
             for (int j = 0; j < ids[i].length; j++) {
-                bricks.add(new Brick(j * 55 + 10, i * 15 + 20, ids[i][j]));
+                bricks.add(new Brick(j * (brickWeight + bricksInterval), i * (brickHeight + bricksInterval) + 15, brickWeight, brickHeight, ids[i][j]));
             }
         }
         

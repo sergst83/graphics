@@ -17,14 +17,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
+    private static final int delay = 5;
 
-    private int FPS = 60;
-    private long targetTime = 1_000 / FPS;
-    private int currentFPS;
+    private double currentFPS;
 
     private GameStateManager gsm;
 
-    Timer tm = new Timer(16, this);
+    Timer tm = new Timer(delay, this);
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -32,7 +31,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         setFocusable(true);
 
         gsm = new GameStateManager();
-        tm.start();
+//        tm.start();
     }
 
     private void tick() {
@@ -75,13 +74,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         repaint();
 
         long elapced = System.currentTimeMillis() - start;
-        long wait = targetTime - elapced;
 
-        if (wait < 0) {
-            wait = 16;
+        if (elapced != 0) {
+            currentFPS = (double) 1_000 / elapced;
         }
-
-        currentFPS = (int) (1_000 / wait);
 
         if (gsm.isGameOver()) {
             tm.stop();

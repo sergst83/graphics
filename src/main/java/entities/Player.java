@@ -22,17 +22,17 @@ public class Player extends Rectangle {
     public Player() {
         setBounds(GamePanel.WIDTH / 2 - 90, GamePanel.HEIGHT - 30, 180, 20);
 
-        topL = new Rectangle(x, y - 1, width / 3, 1);
-        topC = new Rectangle(x + width / 2, y - 1, width / 3, 1);
-        topR = new Rectangle(x + 2 * (width / 3), y - 1, width / 3, 1);
+        topL = new Rectangle(x - 1, y - 1, width / 3, 1);
+        topC = new Rectangle(topL.x + topL.width + 1, topL.y, topL.width, topL.height);
+        topR = new Rectangle(topC.x + topC.width, topC.y, topC.width + 1, topC.height);
         sideL = new Rectangle(x - 1, y, 1, height);
         sideR = new Rectangle(x + width, y, 1, height);
     }
 
     private void calculateEdges() {
-        topL.setBounds(x, y, width / 3, 1);
-        topC.setBounds(x + width / 2, y, width / 3, 1);
-        topR.setBounds(x + 2 * (width / 3), y, width / 3, 1);
+        topL.setBounds(x - 1, y - 1, width / 3, 1);
+        topC.setBounds(topL.x + topL.width + 1, topL.y, topL.width, topL.height);
+        topR.setBounds(topC.x + topC.width, topC.y, topC.width + 1, topC.height);
         sideL.setBounds(x - 1, y, 1, height);
         sideR.setBounds(x + width, y, 1, height);
     }
@@ -62,7 +62,6 @@ public class Player extends Rectangle {
         g.fillRect(x, y, width, height);
 
         // show parts of paddle/player
-/*
         g.setColor(Color.BLUE);
         g.fillRect(topL.x, topL.y, topL.width, topL.height);
         g.setColor(Color.RED);
@@ -73,7 +72,6 @@ public class Player extends Rectangle {
         g.fillRect(sideL.x, sideL.y, sideL.width, sideL.height);
         g.setColor(Color.YELLOW);
         g.fillRect(sideR.x, sideR.y, sideR.width, sideR.height);
-*/
     }
 
     public void keyPressed(int k) {

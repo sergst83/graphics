@@ -18,8 +18,8 @@ public class Ball {
         this.x = x;
         this.y = y;
         this.r = r;
-        dx = 2;
-        dy = 2;
+        dx = 1;
+        dy = 1;
     }
 
     public void tick() {
@@ -38,6 +38,5 @@ public class Ball {
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillOval(x - r, y - r, 2 * r, 2 * r);
-        System.out.println(String.format("x=%s, y=%s, r=%s", x, y, r));
     }
 }

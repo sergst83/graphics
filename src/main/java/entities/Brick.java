@@ -18,6 +18,11 @@ public class Brick extends Rectangle {
         this.health = health;
     }
 
+    public Brick(int x, int y, int width, int height, int health) {
+        setBounds(x, y, width, height);
+        this.health = health;
+    }
+
     public void draw(Graphics g) {
         if (health == 1) {
             g.setColor(Color.BLUE);
