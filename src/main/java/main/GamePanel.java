@@ -3,21 +3,20 @@ package main;
 import gamestate.GameStateManager;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GamePanel extends JPanel implements Runnable, KeyListener {
+public class GamePanel extends JPanel implements KeyListener, ActionListener {
     private static final long serialVersionUID = 1L;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
-
-    public static Thread thread;
-
-    private boolean isRunning = false;
 
     private int FPS = 60;
     private long targetTime = 1_000 / FPS;
@@ -25,52 +24,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private GameStateManager gsm;
 
+    Timer tm = new Timer(16, this);
+
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         addKeyListener(this);
         setFocusable(true);
 
-        start();
-    }
-
-    public void init() {
         gsm = new GameStateManager();
-    }
-
-    private void start() {
-        isRunning = true;
-        thread = new Thread(this);
-        thread.start();
-    }
-
-    @Override
-    public void run() {
-        init();
-        long start;
-        long elapced;
-        long wait;
-
-        while (isRunning) {
-            start = System.currentTimeMillis();
-
-            tick();
-            repaint();
-
-            elapced = System.currentTimeMillis() - start;
-            wait = targetTime - elapced;
-
-            if (wait < 0) {
-                wait = 16;
-            }
-
-            currentFPS = (int) (1_000 / wait);
-
-            try {
-                Thread.sleep(wait);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        tm.start();
     }
 
     private void tick() {
@@ -105,4 +67,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         gsm.keyReleased(k);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        long start = System.currentTimeMillis();
+
+        tick();
+        repaint();
+
+        long elapced = System.currentTimeMillis() - start;
+        long wait = targetTime - elapced;
+
+        if (wait < 0) {
+            wait = 16;
+        }
+
+        currentFPS = (int) (1_000 / wait);
+
+        if (gsm.isGameOver()) {
+            tm.stop();
+        }
+    }
 }

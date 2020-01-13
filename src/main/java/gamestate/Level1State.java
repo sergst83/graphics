@@ -6,7 +6,7 @@ import entities.Player;
 import main.GamePanel;
 import phisics.Collision;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +18,6 @@ public class Level1State extends GameState {
 
     private Collision collision;
 
-    private int[][] ids;
-
     public Level1State(GameStateManager gsm) {
         super(gsm);
     }
@@ -30,7 +28,7 @@ public class Level1State extends GameState {
         ball = new Ball(GamePanel.WIDTH / 2 - 5, GamePanel.HEIGHT / 2 - 5, 5);
         bricks = new ArrayList<>();
 
-        ids = new int[8][14];
+        int[][] ids = new int[8][14];
         for (int i = 0; i < ids.length; i++) {
             for (int j = 0; j < ids[i].length; j++) {
                 if (i <= 1) {
@@ -45,7 +43,7 @@ public class Level1State extends GameState {
                     ids[i][j] = 2;
                 }
 
-                if (i <= 7 && i >= 6) {
+                if (i >= 6) {
                     ids[i][j] = 1;
                 }
             }
@@ -76,10 +74,6 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-
-        if (collision.ballIsDown(ball)) {
-            GamePanel.thread.stop();
-        }
     }
 
     @Override
@@ -99,5 +93,10 @@ public class Level1State extends GameState {
     @Override
     public void keyReleased(int k) {
         player.keyReleased(k);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return collision != null && ball !=null && collision.ballIsDown(ball);
     }
 }

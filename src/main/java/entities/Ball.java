@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import main.GamePanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 @Getter
 @Setter
