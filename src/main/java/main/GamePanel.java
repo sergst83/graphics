@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         setFocusable(true);
 
         gsm = new GameStateManager();
-//        tm.start();
+        tm.start();
     }
 
     private void tick() {

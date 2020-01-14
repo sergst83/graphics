@@ -7,6 +7,7 @@ import main.GamePanel;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 
 public class Collision {
 
@@ -18,6 +19,11 @@ public class Collision {
 
     private boolean brickBall(Brick b, Point p) {
         return b.contains(p);
+    }
+
+    private boolean brickBall(Brick brick, Ball ball) {
+        Ellipse2D ellipse2D = new Ellipse2D.Double(ball.getX() - ball.getR(), ball.getY() - ball.getR(), 2 * ball.getR(), 2 * ball.getR());
+        return ellipse2D.intersects(brick);
     }
 
     public void paddleBall(Player player, Ball ball) {
@@ -57,10 +63,12 @@ public class Collision {
         if (brickBall(brick, new Point(bX + bR, bY)) || brickBall(brick, new Point(bX - bR, bY))) {
             brick.setHealth(brick.getHealth() - 1);
             ball.setDx(ball.getDx() * -1);
-        }
-
-        if (brickBall(brick, new Point(bX, bY + bR)) || brickBall(brick, new Point(bX, bY - bR))) {
+        } else if (brickBall(brick, new Point(bX, bY + bR)) || brickBall(brick, new Point(bX, bY - bR))) {
             brick.setHealth(brick.getHealth() - 1);
+            ball.setDy(ball.getDy() * -1);
+        } else if (brickBall(brick, ball)) {
+            brick.setHealth(brick.getHealth() - 1);
+            ball.setDx(ball.getDx() * -1);
             ball.setDy(ball.getDy() * -1);
         }
     }
